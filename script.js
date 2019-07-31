@@ -127,7 +127,7 @@ console.log('');
 // 5.Print names of eligible students only (students who have internet and live in Karachi are eligible)
 
 for (let i=0; i< students.length; i++ ){
-    if(students[i].hasInternet === true && students[i].address.city === "karachi"){
+    if(students[i].hasInternet === true && students[i].address.city === "Karachi"){
         console.log(students[i].name)
     }
 }
@@ -175,13 +175,64 @@ console.log('');
 // 9.Print age of each student in the below format:
 // Amna's age is 29 years
 
-for (let i=0 ; i < students.length; i++){
-    console.log("")
+// first try...
+// for (let i=0 ; i < students.length; i++){
+//     let dobYear= students[i].dob.getFullYear();
+//     let todayYear= new Date().getFullYear();
+//     let age = todayYear - dobYear;
+//     let dobMonth= students[i].dob.getMonth();
+//     let todayMonth= new Date().getMonth();
+//     if(todayMonth < dobMonth){
+//         age--;
+//     }else if(todayMonth===dobMonth){
+//         let dobDate= students[i].getDate();
+//         let todayDate= new Date().getDate();
+//         if(todayDate<dobDate){
+//             age--;
+//         }
+// console.log(students[i].name +"'s age is " + age + " years.")   
+// }
+
+function findAge(dateOfBirth){
+    let dobYear= dateOfBirth.getFullYear();
+    let todayYear= new Date().getFullYear();
+    let age = todayYear - dobYear;
+    let dobMonth= dateOfBirth.getMonth();
+    let todayMonth= new Date().getMonth();
+    if(todayMonth < dobMonth){
+        age--;
+    }else if(todayMonth===dobMonth){
+        let dobDate= dateOfBirth.getDate();
+        let todayDate= new Date().getDate();
+        if(todayDate<dobDate){
+            age--;
+        }
+    }
+    return age;
 }
 
-
-
-
-
+for (let i=0 ; i < students.length; i++){
+    let studentAge= findAge(students[i].dob);
+    console.log(`${students[i].name} 's age is ${studentAge} years`)
+    
+}
+console.log('');
+// example for Q.10.
+// let oldestStudent = [0];
+// for (let i=0 ; i < students.length; i++){
+//     if(oldestStudent < students[i].age ){
+//     console.log(students[i].name)
+// }
+// }
 
 // 10.Print the name of the oldest student.
+
+let oldestStudent = students[0];
+for (let i = 1; i < students.length; i++) {
+    let oldestStudentAge = findAge(oldestStudent.dob);
+    let currentStudentAge = findAge(students[i].dob);
+    if (currentStudentAge > oldestStudent){
+        oldestStudent = students[i];
+    }
+}
+console.log(`Oldest student is ${oldestStudent.name}`);
